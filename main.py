@@ -2,15 +2,14 @@
 # -*- coding: utf-8 -*-
 from tkinter import *
 from tkinter import filedialog
-import hashlib
+import hashlib 
 import os
-
 
 window=Tk()
 
 window.geometry("600x600")
 window.title("Password Cracker")
-window.config(background="#756c6b")
+window.config(background="black")
 
 lock=PhotoImage(file="unlock.png")
 window.iconphoto(True,lock)
@@ -24,21 +23,31 @@ label=Label(window,text="Your personal password cracker",
 label.pack(pady=20)
 
 
-
+Hash=Entry()
+Hash.pack()
 
 
 def openFile():
     filepath=filedialog.askopenfilename()
     file=open(filepath,'r')
-    print(file.read())
+    for word in file:
+        enc_wrd = word.strip().encode('utf-8')
+        digest = hashlib.md5(enc_wrd).hexdigest()
+        
     file.close()
 
+wordlistButton = Button(
+    text="Submit Word List",
+    command=openFile,
+    activebackground="#756c6b",
+    activeforeground="white",
+    anchor="center",
+    bd=3,
+    bg="#756c6b",
+    relief=RAISED,
+    cursor="hand"
+)
 
-wordlistButton=Button(text="Submit Word List",command=openFile,
-                      bg="#756c6b",
-                      fg="white",
-                     
-                      activebackground="white")
 wordlistButton.pack(pady=20)
 
 
@@ -47,5 +56,4 @@ wordlistButton.pack(pady=20)
     
 
 window.mainloop()
-
 
